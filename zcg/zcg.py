@@ -6,6 +6,20 @@ from redbot.core.bot import Red
 
 log = logging.getLogger("ngL.zcg")
 
+def get_bitrate(guild: discord.Guild):
+    """
+    Get the bitrate from the guild premium status.
+    :param guild: The guild to get the bitrate from.
+    """
+    if guild.premium_tier == 3:
+        return 384000
+    elif guild.premium_tier == 2:
+        return 256000
+    elif guild.premium_tier == 1:
+        return 128000
+    else:
+        return 96000
+
 class ZCG(commands.Cog):
     """
     Birthdays
@@ -67,7 +81,7 @@ class ZCG(commands.Cog):
                     while vc_name == after.channel.name:
                         vc_name = random.choice(self.vc_names)
                     channel = await category.create_voice_channel(
-                        name=vc_name, bitrate=vc.get_bitrate(guild), reason="Channel created"
+                        name=vc_name, bitrate=get_bitrate(guild), reason="Channel created"
                     )
 
                     # Add access to voice channels for mod role
@@ -92,7 +106,7 @@ class ZCG(commands.Cog):
                 if len(category.channels) == 0:
                     vc_name = random.choice(self.vc_names)
                     await category.create_voice_channel(
-                        name=vc_name, bitrate=vc.get_bitrate(guild), reason="Channel was empty"
+                        name=vc_name, bitrate=get_bitrate(guild), reason="Channel was empty"
                     )
 
     async def red_delete_data_for_user(self, **kwargs) -> None:
