@@ -60,7 +60,7 @@ class ZCG(commands.Cog):
             guild = self.bot.get_guild(after.channel.guild.id)
             category = guild.get_channel(after.channel.category_id)
 
-            if after.channel.category_id in self.CATEGORY_IDS:
+            if after.channel.category_id in self.category_ids:
                 if len(after.channel.members) == 1:
                     vc_name = random.choice(self.vc_names)
                     while vc_name == after.channel.name:
@@ -71,15 +71,15 @@ class ZCG(commands.Cog):
 
                     # Add access to voice channels for mod role
                     try:
-                        role = guild.get_role(self.MOD_RID)
+                        role = guild.get_role(self.mod_rid)
                         await channel.set_permissions(role, view_channel=True, connect=True, manage_channels=True)
                     except ValueError:
-                        self.bot.logger.error(f"Role with ID {self.MOD_RID} not found.")
+                        self.bot.logger.error(f"Role with ID {self.mod_rid} not found.")
 
         if before.channel is not None:
             before_channel = self.bot.get_channel(before.channel.id)
 
-            if before_channel is not None and before_channel.category_id in self.CATEGORY_IDS:
+            if before_channel is not None and before_channel.category_id in self.category_ids:
                 if len(before_channel.members) == 0:
                     await before_channel.delete(reason="Channel is empty")
 
@@ -87,7 +87,7 @@ class ZCG(commands.Cog):
             guild = self.bot.get_guild(before.channel.guild.id)
             category = guild.get_channel(before.channel.category_id)
 
-            if before_channel.category_id in self.CATEGORY_IDS:
+            if before_channel.category_id in self.category_ids:
                 if len(category.channels) == 0:
                     vc_name = random.choice(self.vc_names)
                     await category.create_voice_channel(
