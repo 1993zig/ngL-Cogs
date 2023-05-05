@@ -1,6 +1,7 @@
 import discord
 import logging
 from redbot.core import commands
+from redbot.core.bot import Red
 
 log = logging.getLogger("ngL.zcg")
 
