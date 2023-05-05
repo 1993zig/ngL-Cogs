@@ -1,5 +1,6 @@
 import discord
 import logging
+import random
 from redbot.core import commands
 from redbot.core.bot import Red
 
