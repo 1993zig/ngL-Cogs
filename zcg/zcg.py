@@ -1,10 +1,12 @@
 import discord
 import logging
 import random
+
 from redbot.core import commands
 from redbot.core.bot import Red
 
 log = logging.getLogger("ngL.zcg")
+
 
 def get_bitrate(guild: discord.Guild):
     """
@@ -20,14 +22,13 @@ def get_bitrate(guild: discord.Guild):
     else:
         return 96000
 
+
 class ZCG(commands.Cog):
     """
-    Birthdays
-
-    Set yours and get a message and role on your birthday!
+    ZCG Voice Channels
     """
 
-    __version__ = "1.0.0"
+    __version__ = "1.0.1"
 
     def __init__(self, bot: Red):
         super().__init__()
@@ -51,6 +52,10 @@ class ZCG(commands.Cog):
         ]
         self.category_ids = [927963463144325200, 982625359356915752]
         self.mod_rid = 918480035709603860
+
+    async def red_delete_data_for_user(self, **kwargs) -> None:
+        """Nothing to delete"""
+        return
 
     @commands.Cog.listener()
     async def on_voice_state_update(
@@ -108,7 +113,3 @@ class ZCG(commands.Cog):
                     await category.create_voice_channel(
                         name=vc_name, bitrate=get_bitrate(guild), reason="Channel was empty"
                     )
-
-    async def red_delete_data_for_user(self, **kwargs) -> None:
-        """Nothing to delete"""
-        return
